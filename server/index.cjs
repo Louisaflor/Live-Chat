@@ -6,6 +6,14 @@ const { Server } = require("socket.io");
 
 const server = http.createServer(app);
 
+app.use(cors()); //Add CORS middleware
+
+app.get("/", (req, res) => {
+  res.send("Hello world");
+});
+
+//This version also work with connecting socket.io to the front end as well
+
 // const io = require("socket.io")(server, {
 //   cors: {
 //     origin: "http://localhost:5173",
@@ -13,14 +21,6 @@ const server = http.createServer(app);
 //     credentials: true,
 //   },
 // });
-
-/////////////////
-
-app.use(cors()); //Add CORS middleware
-
-app.get("/", (req, res) => {
-  res.send("Hello world");
-});
 
 const io = new Server(server, {
   cors: {
@@ -33,9 +33,11 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log(`User connected ${socket.id}`);
 
-  //In here is where we write our socket event listeners in here
+  //In here .on is recveving the messaged from the client based on "send_message"?
   socket.on("send_message", (msg) => {
     console.log("here is the message in the server: ", msg);
+
+    socket.emit("recieve_message", msg); //this will send the mesasge to everyone, including the sender
   });
 });
 

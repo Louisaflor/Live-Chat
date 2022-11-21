@@ -24,12 +24,28 @@ a:hover {
   color: #535bf2;
 }
 
-body {
+/* body {
   margin: 0;
   display: flex;
-  place-items: center;
+  place-items:center;
   min-width: 320px;
   min-height: 100vh;
+} */
+
+.submit {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  margin-bottom: 2em;
+
+}
+
+.input {
+  width: 60%;
+  height: 30px;
+  border-radius: 15px;
+
 }
 
 h1 {
