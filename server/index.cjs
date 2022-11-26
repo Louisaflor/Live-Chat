@@ -37,7 +37,8 @@ io.on("connection", (socket) => {
   socket.on("send_message", (msg) => {
     console.log("here is the message in the server: ", msg);
 
-    socket.emit("recieve_message", msg); //this will send the mesasge to everyone, including the sender
+    //socket.broadcast.emit("recieve_message", msg); //this will send the mesasge to everyone, except the sender
+    io.emit("recieve_message", msg); //this will send the mesasge to everyone, including the sender
   });
 });
 
