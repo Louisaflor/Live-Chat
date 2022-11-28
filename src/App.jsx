@@ -18,6 +18,9 @@ function App() {
 
   //console.log('what is the displayMessage OUTSIDE: ', displayMessage)
 
+
+
+
   const sendMesage = (e) => {
     console.log('sending the message here: ', message)
     socket.emit('send_message' , {message})
