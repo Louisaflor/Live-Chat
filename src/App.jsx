@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import io from 'socket.io-client'
 import Messages from './Messages.jsx'
 import SendMessage from './SendMessage.jsx'
 import Rooms from './Rooms'
+import io from 'socket.io-client'
 
 
 
@@ -30,14 +30,14 @@ function App() {
           <Route
           path='/'
           element={
-            <Rooms setUserName={setUserName}  setRoom={setRoom}/>
+            <Rooms room={room} username={username} setUserName={setUserName}  setRoom={setRoom} socket={socket}/>
           }
           />
 
           <Route
           path='/chat'
           element={
-            <SendMessage socket={socket} setMessage={setMessage} />
+            <SendMessage socket={socket} setMessage={setMessage} message={message} />
           }
           />
         </Routes>

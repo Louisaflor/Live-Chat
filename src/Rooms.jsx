@@ -1,6 +1,23 @@
 import {useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 import './App.css'
-export default function Rooms({setRoom, setUserName}) {
+
+
+
+export default function Rooms({room, setRoom, setUserName, username, socket}) {
+
+  const navigate = useNavigate();
+
+
+  //this function will take the user to the room they requested
+  const changeRoom = () => {
+    // if (room !== " " && username !== " ") {
+    //   socket.emit('join room', {username, room})
+    // }
+
+    //then we want to navigatie to the chat room
+    navigate('/chat', {replace: true})
+  }
 
 
   return (
@@ -18,7 +35,7 @@ export default function Rooms({setRoom, setUserName}) {
           <option value="Room3">Room 3</option>
           <option value="Room4">Room 4</option>
         </select>
-        <button>Start Chat</button>
+        <button onClick={changeRoom}>Start Chat</button>
       </div>
 
     </div>
