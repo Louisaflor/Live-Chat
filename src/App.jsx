@@ -4,14 +4,18 @@ import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import io from 'socket.io-client'
 import Messages from './Messages.jsx'
+import SendMessage from './SendMessage.jsx'
+import Rooms from './Rooms'
 
-//////////
-//import vitePluginSocketIO from "vite-plugin-socket-io";
+
 
 const socket = io.connect('http://127.0.0.1:4000') //Adding this, out server for the socket will run on port 4000
 
 
 function App() {
+
+  const [username, setUserName] = useState("")
+  const [room, setRoom] = useState("")
 
   const [message, setMessage] = useState("")
   //const [displayMessage, setDisplayMessage] = useState([])
@@ -19,25 +23,26 @@ function App() {
   //console.log('what is the displayMessage OUTSIDE: ', displayMessage)
 
 
-
-
-  const sendMesage = (e) => {
-    console.log('sending the message here: ', message)
-    socket.emit('send_message' , {message})
-    setMessage("")
-  }
-
   return (
-    <div className="App">
+      <Router>
+      <div>
+        <Routes>
+          <Route
+          path='/'
+          element={
+            <Rooms setUserName={setUserName}  setRoom={setRoom}/>
+          }
+          />
 
-
-      <Messages socket={socket} />
-      <div className="submit">
-      <input className="input" type="text" placeholder="Message..." value={message} onChange={(e) => setMessage(e.target.value)} />
-      <button onClick={sendMesage}>Submit</button>
+          <Route
+          path='/chat'
+          element={
+            <SendMessage socket={socket} setMessage={setMessage} />
+          }
+          />
+        </Routes>
       </div>
-
-    </div>
+      </Router>
   )
 }
 
