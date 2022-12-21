@@ -33,7 +33,31 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log(`User connected ${socket.id}`);
 
-  //In here .on is recveving the messaged from the client based on "send_message"?
+  //create socket where they are requesting to be in a certain room
+  socket.on("join room", (info) => {
+    const { username, room } = info;
+    console.log(`I HAVE RECIVED THE ${username} AND ${room}`);
+
+    //create a room for the user
+    socket.join(room);
+
+    //after they joined the room we can create a timestamp to show
+    // let timeStamp = Date.now()
+    // socket.to(room).emit('recieve_message', {
+
+    //   message: `${username} has joined the chat room`,
+    //   username: 'Chat Bot',
+    //   timeStamp
+    // });
+
+    //we also want to send a welcome message
+    socket.emit("recieve_message", {
+      message: `Welcome ${username}`,
+      username: "Chat Bot",
+    });
+  });
+
+  //In here .on is recveving the message from the client based on "send_message"?
   socket.on("send_message", (msg) => {
     console.log("here is the message in the server: ", msg);
 
