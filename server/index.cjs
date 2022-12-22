@@ -29,6 +29,10 @@ const io = new Server(server, {
   },
 });
 
+//need to store users socket id and username
+let chatRoom = "";
+let allUsers = []; //all the users in chat room
+
 //Listening for when the clirnet connects to the sockiet.io - client?
 io.on("connection", (socket) => {
   console.log(`User connected ${socket.id}`);
@@ -42,18 +46,25 @@ io.on("connection", (socket) => {
     socket.join(room);
 
     //after they joined the room we can create a timestamp to show
-    // let timeStamp = Date.now()
-    // socket.to(room).emit('recieve_message', {
+    let __timeStamp__ = new Date();
+    //we are sending this message to everyone in the room
+    //this will now show in the currenty user
+    socket.to(room).emit("recieve_message", {
+      message: `${username} has joined the chat room`,
+      username: "Chat Bot",
+    });
 
-    //   message: `${username} has joined the chat room`,
-    //   username: 'Chat Bot',
-    //   timeStamp
-    // });
+    chatRoom = room;
+    allUsers.push({ id: socket.id, username, room });
+    let chatUsers = allUsers.filter((user) => user.room === room);
+    socket.emit("chatroom_users", chatUsers);
 
-    //we also want to send a welcome message
+    //sends a message immeditaly to the room pubicly
+    //will show in the users page
     socket.emit("recieve_message", {
       message: `Welcome ${username}`,
       username: "Chat Bot",
+      time: __timeStamp__,
     });
   });
 
@@ -62,7 +73,7 @@ io.on("connection", (socket) => {
     console.log("here is the message in the server: ", msg);
 
     //socket.broadcast.emit("recieve_message", msg); //this will send the mesasge to everyone, except the sender
-    io.emit("recieve_message", msg); //this will send the mesasge to everyone, including the sender
+    //io.emit("recieve_message", msg); //this will send the mesasge to everyone, including the sender
   });
 });
 
@@ -71,3 +82,6 @@ server.listen(4000, () =>
     "server is running in here that I created on port 4000 or 3000 heh"
   )
 );
+
+//socket means it will go to the particular client
+//io mean it will listen globally??

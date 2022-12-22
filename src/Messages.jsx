@@ -6,7 +6,7 @@ export default function Messages({socket}) {
 
   useEffect(() => {
     socket.on('recieve_message', (data) => {
-      console.log('im i getting my data back to the front?: ', data.message)
+      console.log('im i getting my data back to the front?: ', data)
 
       setDisplayMessage(oldState => [...oldState, {message: data.message}])
     })

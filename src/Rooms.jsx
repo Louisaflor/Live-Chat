@@ -20,6 +20,11 @@ export default function Rooms({room, setRoom, setUserName, username, socket}) {
     navigate('/chat', {replace: true})
   }
 
+  const onChange = (event) => {
+    console.log('changed to room value to: ', event.target.value)
+    setRoom(event.target.value)
+  }
+//(e) => setRoom('hello')
 
   return (
     <div className="Rooms">
@@ -30,7 +35,7 @@ export default function Rooms({room, setRoom, setUserName, username, socket}) {
         />
         <br/>
         <select
-        onChange={(e) => setRoom('hello')}>
+        onChange={onChange}>
           <option value="Room1">Room 1</option>
           <option value="Room2">Room 2</option>
           <option value="Room3">Room 3</option>

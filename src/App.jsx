@@ -15,7 +15,7 @@ const socket = io.connect('http://127.0.0.1:4000') //Adding this, out server for
 function App() {
 
   const [username, setUserName] = useState("")
-  const [room, setRoom] = useState("")
+  const [room, setRoom] = useState("Room1")
 
   const [message, setMessage] = useState("")
   //const [displayMessage, setDisplayMessage] = useState([])
